@@ -15,7 +15,7 @@ async function checkHealth() {
 checkHealth();
 yardList();
 
-// TODO (you): load /api/trailers and render the yard list.
+// Yard list: fetch trailers from the API and build the table rows.
 async function yardList() {
   const el_h = document.getElementById("trailer_table_head");
   const el_b = document.getElementById("trailer_table_body")
@@ -29,8 +29,8 @@ async function yardList() {
       th.textContent = key
       el_h.appendChild(th)  
       }
-    let keys = Object.keys(data);
-        // One row per trailer
+
+    // One row per trailer
     for (let k = 0; k < data.length; k++) {
       const trailer = data[k];                 // the current trailer object
       const tr = document.createElement('tr');

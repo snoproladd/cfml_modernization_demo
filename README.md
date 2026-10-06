@@ -37,7 +37,7 @@ modern-node/           Node/Express API + vanilla JS front end
 
 | Feature | Legacy (CFML) | Modern (JS) |
 |---|---|---|
-| Yard list | [ ] | [ ] |
+| Yard list | [x] | [x] |
 | Gate check-in | [ ] | [ ] |
 | Move request (slot to door) | [ ] | [ ] |
 | Check-out | [ ] | [ ] |

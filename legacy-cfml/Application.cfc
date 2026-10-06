@@ -15,7 +15,7 @@ component {
         password: server.system.environment.DB_PASSWORD
     };
 
-// Every query uses this datasource unless told otherwise.
+    // Every query uses this datasource unless told otherwise.
     this.datasource = "yard";
 
     // TODO (you): add onRequestStart / onError handlers as you learn them.

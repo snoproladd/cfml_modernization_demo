@@ -16,9 +16,7 @@ app.get('/api/health', async (req, res) => {
   res.json({ ok: true, trailersOnSite: rows[0].on_site });
 });
 
-// YOUR TODO LIST (modern side), migrating one legacy page at a time:
-//   GET  /api/trailers              - same data as legacy index.cfm
-
+// Yard list: same query as legacy index.cfm, returned as JSON.
 app.get('/api/trailers', async (req, res) =>{
   const {rows} = await db.query(
     `SELECT t.*, l.code, l.location_type
@@ -30,6 +28,8 @@ app.get('/api/trailers', async (req, res) =>{
   res.json(rows)
 }
 )
+
+// REMAINING (modern side), migrating one legacy page at a time:
 //   POST /api/trailers              - gate check-in (replaces checkin.cfm)
 //   POST /api/moves                 - request a move (replaces move.cfm)
 //   POST /api/trailers/:id/checkout - check out (replaces checkout.cfm)
