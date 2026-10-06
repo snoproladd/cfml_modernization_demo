@@ -3,6 +3,7 @@ component {
     this.name = "YardCheckInLegacy";
     this.sessionManagement = true;
     this.sessionTimeout = createTimeSpan(0, 0, 30, 0);
+    this.timezone="America/New_York";
 
     // Connection settings come from environment variables set in docker-compose.yml.
     // Postgres support is bundled with Lucee, so no admin setup is needed.

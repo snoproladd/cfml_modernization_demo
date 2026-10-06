@@ -20,6 +20,16 @@
         (SELECT COUNT(*) FROM locations)                             AS locations
 </cfquery>
 
+<cfquery name="qTrailers" datasource="yard">
+    SELECT t.*, l.code, l.location_type
+    FROM trailers t
+    INNER JOIN locations l ON t.location_id=l.id
+    WHERE t.status IN ('in_yard', 'at_door')
+    ORDER BY l.code
+</cfquery>
+
+
+
 <cfoutput>
 <!doctype html>
 <html>
@@ -29,6 +39,26 @@
     <p>Lucee #server.lucee.version# is connected to Postgres.</p>
     <p>Trailers on site: #counts.on_site# &nbsp;|&nbsp; Locations: #counts.locations#</p>
     <p><a href="/">Go to the modern app</a></p>
+    <table>
+        <tr>
+            <th>Trailer</th>
+            <th>Carrier</th>
+            <th>Location</th>
+            <th>Load Status</th>
+            <th>Status</th>
+            <th>Checked in at</th>
+        </tr>
+        <cfloop query="qTrailers">
+            <tr>
+                <td>#trailer_number#</td>
+                <td>#carrier#</td>
+                <td>#location_type#</td>
+                <td>#load_status#</td>
+                <td>#status#</td>
+                <td>#dateTimeFormat(checked_in_at, "mmm d, h:nn tt")#</td>
+            </tr>
+        </cfloop>
+    </table>
 </body>
 </html>
 </cfoutput>
