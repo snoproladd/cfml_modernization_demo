@@ -52,7 +52,7 @@
             <tr>
                 <td>#trailer_number#</td>
                 <td>#carrier#</td>
-                <td>#location_type#</td>
+                <td>#code#</td>
                 <td>#load_status#</td>
                 <td>#status#</td>
                 <td>#dateTimeFormat(checked_in_at, "mmm d, h:nn tt")#</td>

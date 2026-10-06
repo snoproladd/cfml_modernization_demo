@@ -18,6 +18,18 @@ app.get('/api/health', async (req, res) => {
 
 // YOUR TODO LIST (modern side), migrating one legacy page at a time:
 //   GET  /api/trailers              - same data as legacy index.cfm
+
+app.get('/api/trailers', async (req, res) =>{
+  const {rows} = await db.query(
+    `SELECT t.*, l.code, l.location_type
+    FROM trailers t
+    INNER JOIN locations l ON t.location_id=l.id
+    WHERE t.status IN ('in_yard', 'at_door')
+    ORDER BY l.code`
+  );
+  res.json(rows)
+}
+)
 //   POST /api/trailers              - gate check-in (replaces checkin.cfm)
 //   POST /api/moves                 - request a move (replaces move.cfm)
 //   POST /api/trailers/:id/checkout - check out (replaces checkout.cfm)
