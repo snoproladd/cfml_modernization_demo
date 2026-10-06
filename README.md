@@ -20,6 +20,7 @@ docker compose up
 | http://localhost:3000/legacy/ | Legacy ColdFusion app (Lucee) |
 | http://localhost:8888 | Lucee directly (debugging) |
 | localhost:5433 | Postgres (user `yard`, password `yard_dev_password`) |
+| http://localhost:8080 | Adminer database browser (System: PostgreSQL, Server: `db`, user/password/database as above) |
 
 The first start downloads images and seeds the database, so give it a minute.
 

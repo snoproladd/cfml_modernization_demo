@@ -30,7 +30,7 @@
 <cfoutput>
 <!doctype html>
 <html>
-<head><title>Yard Check-In (Legacy CFML)</title></head>
+<head><title>Yard Status (Legacy CFML)</title></head>
 <body>
     <h1>Yard Check-In: legacy ColdFusion app</h1>
     <p>Lucee #server.lucee.version# is connected to Postgres.</p>
@@ -56,6 +56,9 @@
             </tr>
         </cfloop>
     </table>
+    <a href= "./checkin.cfm">Check-In Form</a>
+    <a href = "./move.cfm">Move request</a>
+    <a href="./checkout">Checkout form</a>
 </body>
 </html>
 </cfoutput>
