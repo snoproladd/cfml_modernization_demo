@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trailer Checkout (Modern)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Trailer Checkout: modern JavaScript app</h1>
+  <p id="status">Checking database connection...</p>
+  <p><a href="/legacy/">Go to the legacy ColdFusion app</a></p>
+
+  <form id="checkout">
+    <fieldset>
+      <legend>Trailer to check out</legend>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Trailer</th>
+            <th>Carrier</th>
+            <th>Location</th>
+            <th>Load Status</th>
+            <th>Status</th>
+            <th>Checked in at</th>
+          </tr>
+        </thead>
+        <!-- filled by app.js -->
+        <tbody id="checkout_table_body"></tbody>
+      </table>
+      <button type="submit">Check Out Trailer</button>
+    </fieldset>
+  </form>
+
+  <p>
+    <a href="./index.html">Yard Status</a>
+    <a href="./checkin.html">Check-In Form</a>
+    <a href="./move.html">Move Request</a>
+  </p>
+
+  <script src="app.js"></script>
+</body>
+</html>

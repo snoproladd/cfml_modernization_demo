@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trailer Move (Modern)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Trailer Move Request: modern JavaScript app</h1>
+  <p id="status">Checking database connection...</p>
+  <p><a href="/legacy/">Go to the legacy ColdFusion app</a></p>
+
+  <form id="move">
+    <fieldset>
+      <legend>Trailer to move</legend>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Trailer</th>
+            <th>Carrier</th>
+            <th>Current Location</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <!-- filled by app.js: radios named trailer_id -->
+        <tbody id="move_trailer_body"></tbody>
+      </table>
+    </fieldset>
+
+    <fieldset>
+      <legend>Destination</legend>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Location</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <!-- filled by app.js: radios named to_location_id -->
+        <tbody id="move_destination_body"></tbody>
+      </table>
+    </fieldset>
+
+    <button type="submit">Move Trailer</button>
+  </form>
+
+  <p>
+    <a href="./index.html">Yard Status</a>
+    <a href="./checkin.html">Check-In Form</a>
+    <a href="./checkout.html">Checkout Form</a>
+  </p>
+
+  <script src="app.js"></script>
+</body>
+</html>
