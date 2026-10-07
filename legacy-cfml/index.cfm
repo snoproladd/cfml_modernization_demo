@@ -3,7 +3,6 @@
     Lists every trailer on site with its yard slot or dock door.
 
     REMAINING (legacy side):
-      - checkin.cfm  - gate check-in form; INSERT using <cfqueryparam> for every value
       - move.cfm     - request a move from a slot to a door
       - checkout.cfm - check a trailer out and free its location
 

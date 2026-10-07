@@ -44,7 +44,7 @@ app.get('/api/open_slots', async (req,res) =>{
   );
   res.json(rows)
 })
-//   POST /api/trailers              - gate check-in (replaces checkin.cfm)
+// Gate check-in: same INSERT as legacy checkin.cfm, returns the new row.
 
 app.post('/api/checkin', async (req, res) =>{
   const {trailer_number, carrier, seal_number, load_status, location_id} = req.body
@@ -61,6 +61,7 @@ app.post('/api/checkin', async (req, res) =>{
   console.error(error);
   res.status(500).json({ error: "Internal server error"})
 }})
+// REMAINING (modern side):
 //   POST /api/moves                 - request a move (replaces move.cfm)
 //   POST /api/trailers/:id/checkout - check out (replaces checkout.cfm)
 

@@ -27,7 +27,7 @@ The first start downloads images and seeds the database, so give it a minute.
 ## Project layout
 
 ```
-docker-compose.yml     all four services
+docker-compose.yml     all five services (gateway, lucee, node, db, adminer)
 gateway/nginx.conf     routes /legacy/* to Lucee, everything else to Node
 db/init/               schema + sample data (runs on first start only)
 legacy-cfml/           ColdFusion app (Lucee serves this folder)
@@ -39,7 +39,7 @@ modern-node/           Node/Express API + vanilla JS front end
 | Feature | Legacy (CFML) | Modern (JS) |
 |---|---|---|
 | Yard list | [x] | [x] |
-| Gate check-in | [ ] | [ ] |
+| Gate check-in | [x] | [x] |
 | Move request (slot to door) | [ ] | [ ] |
 | Check-out | [ ] | [ ] |
 

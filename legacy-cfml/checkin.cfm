@@ -1,5 +1,5 @@
 <cfif structKeyExists(form, "location_id")>
-    <!--- the form was submitted: do the INSERT here, then redirect --->
+    <!--- Form submitted: save the trailer, then return to the yard list --->
     <cfquery name="check_in">
         INSERT INTO trailers (trailer_number, carrier, seal_number, load_status, location_id, checked_in_at)
         VALUES (
@@ -12,8 +12,6 @@
             )RETURNING ID
     </cfquery>
     <cflocation url = "index.cfm" addtoken = "false">
-<cfelse>
-    <!--- first visit: nothing to do, just show the form below --->
 </cfif>
 
 <cfquery name = "counts">
