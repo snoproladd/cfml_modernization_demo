@@ -1,14 +1,17 @@
 <cfif structKeyExists(form, "location_id")>
     <!--- the form was submitted: do the INSERT here, then redirect --->
-    <cfquery>
+    <cfquery name="check_in">
         INSERT INTO trailers (trailer_number, carrier, seal_number, load_status, location_id, checked_in_at)
         VALUES (
-            <cfqueryparam value="#form.trailer_id_in#" cfsqltype="cf_sql_varchar" maxlength="20"></cfqueryparam>
-            <cfqueryparam value="#form.carrier_in#" cfsqltype="cf_sql_varchar" maxlength="60"></cfqueryparam>
-            <cfqueryparam value = "#form.seal_number_in#" cfsqltype = "cf_sql_varchar" maxlength = "30" null = "#NOT len(trim(form.seal_number))#">
-            
-        )
+            <cfqueryparam value="#form.trailer_id_in#" cfsqltype="cf_sql_varchar" maxlength="20">,
+            <cfqueryparam value="#form.carrier_in#" cfsqltype="cf_sql_varchar" maxlength="60">,
+            <cfqueryparam value = "#form.seal_number_in#" cfsqltype = "cf_sql_varchar" maxlength = "30" null = "#NOT len(trim(form.seal_number_in))#">,
+            <cfqueryparam value = "#form.empty_full#" cfsqltype = "cf_sql_varchar" maxlength="10">,
+            <cfqueryparam value = "#form.location_id#" cfsqltype = "cf_sql_integer">,
+            <cfqueryparam value = "#Now()#" cfsqltype="cf_sql_timestamp">
+            )RETURNING ID
     </cfquery>
+    <cflocation url = "index.cfm" addtoken = "false">
 <cfelse>
     <!--- first visit: nothing to do, just show the form below --->
 </cfif>
@@ -49,9 +52,8 @@
     <input type = "text" name = "carrier_in" placeholder="Carrier" maxlength = 60 required />
     <input type = "text" name = "seal_number_in" placeholder="Seal  Number" maxlength = 30 />
     <select name="empty_full">
-    <option value="empty">Empty</option>
-    <option value="full">Full</option>
-    <option value="partial">Partial</option>
+    <option value="empty">empty</option>
+    <option value="loaded">loaded</option>
     </select>
     </fieldset>
     <fieldset>
@@ -65,18 +67,10 @@
     <cfloop query = "open_spots">
         <tr>
         <td>
-        <input type="radio" name="location_id" value="
-        #id#
-        " id="slot_
-        #id#
-        " required>
+        <input type="radio" name="location_id" value="#id#" id="slot_#id#" required>
         </td>
         <td>
-        <label for="slot_
-        #id#
-        ">
-        #code#
-        </label>
+        <label for="slot_#id#">#code#</label>
         </td>
         <td>#location_type#</td>
         </tr>
@@ -87,7 +81,7 @@
     </form>
     <a href= "./index.cfm">Yard status</a>
     <a href = "./move.cfm">Move request</a>
-    <a href="./checkout">Checkout form</a>
+    <a href="./checkout.cfm">Checkout form</a>
     </body>
     </html>
 </cfoutput>
