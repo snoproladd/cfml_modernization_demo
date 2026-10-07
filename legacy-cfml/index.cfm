@@ -57,7 +57,7 @@
     </table>
     <a href= "./checkin.cfm">Check-In Form</a>
     <a href = "./move.cfm">Move request</a>
-    <a href="./checkout">Checkout form</a>
+    <a href= "./checkout.cfm">Checkout form</a>
 </body>
 </html>
 </cfoutput>

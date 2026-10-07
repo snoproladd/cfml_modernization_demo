@@ -11,7 +11,7 @@
             <cfqueryparam value = "#Now()#" cfsqltype="cf_sql_timestamp">
             )RETURNING ID
     </cfquery>
-    <cflocation url = "index.cfm" addtoken = "false">
+    <cflocation url = "./index.cfm" addtoken = "false">
 </cfif>
 
 <cfquery name = "counts">
