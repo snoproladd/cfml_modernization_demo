@@ -1,0 +1,46 @@
+   <!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yard Check-In (Modern)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Yard Check-In: modern JavaScript app</h1>
+  <p id="status">Checking database connection...</p>
+  <p><a href="/legacy/">Go to the legacy ColdFusion app</a></p>
+<form id="checkin">
+    <fieldset>
+    <legend>Trailer Information</legend>
+    <input type="text" name="trailer_number" placeholder="Trailer ID" maxlength=20 required />
+    <input type = "text" name = "carrier" placeholder="Carrier" maxlength = 60 required />
+    <input type = "text" name = "seal_number" placeholder="Seal  Number" maxlength = 30 />
+    <select name="load_status" required>
+    <option value="empty">empty</option>
+    <option value="loaded">loaded</option>
+    </select>
+    </fieldset>
+    <fieldset>
+    <legend>Routing</legend>
+    <table>
+        <thead id="trailer_table_checkin_head">
+            <tr>
+                <th></th>
+                <th>Open Slot</th>
+                <th>Slot Type</th>
+            </tr>      
+            </thead>         
+        <tbody id="trailer_table_checkin_body"></tbody>
+
+    </table>
+    <button type="submit" id="route_trailer_btn">Route Trailer</button>
+    
+    </fieldset>
+    </form>
+    <script src="app.js"></script>
+    <a href= "./index.html">Yard status</a>
+    <a href = "./move.html">Move request</a>
+    <a href="./checkout.html">Checkout form</a>
+    </body>
+    </html>

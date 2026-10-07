@@ -28,9 +28,39 @@ app.get('/api/trailers', async (req, res) =>{
   res.json(rows)
 }
 )
-
-// REMAINING (modern side), migrating one legacy page at a time:
+// GET Open slots for yard assignment
+app.get('/api/open_slots', async (req,res) =>{
+  const {rows} = await db.query(
+    `SELECT id, code, location_type
+    FROM locations
+    WHERE location_type = 'slot'
+    AND id NOT IN (
+    SELECT location_id
+    FROM trailers
+    WHERE status <> 'checked_out'
+    AND location_id IS NOT NULL
+    )
+    ORDER BY code`
+  );
+  res.json(rows)
+})
 //   POST /api/trailers              - gate check-in (replaces checkin.cfm)
+
+app.post('/api/checkin', async (req, res) =>{
+  const {trailer_number, carrier, seal_number, load_status, location_id} = req.body
+  try{
+    const seal = seal_number?.trim() || null;
+    const trailer = trailer_number?.trim()
+    const result = await db.query(
+    `INSERT INTO trailers (trailer_number, carrier, seal_number, load_status, location_id, checked_in_at)
+    VALUES ($1, $2, $3, $4, $5, NOW()) RETURNING *`,
+    [trailer, carrier, seal, load_status, location_id]
+  );
+  res.status(201).json(result.rows[0])
+}catch(error){
+  console.error(error);
+  res.status(500).json({ error: "Internal server error"})
+}})
 //   POST /api/moves                 - request a move (replaces move.cfm)
 //   POST /api/trailers/:id/checkout - check out (replaces checkout.cfm)
 
