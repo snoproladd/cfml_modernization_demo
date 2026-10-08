@@ -2,10 +2,6 @@
     Legacy app home page: localhost:3000/legacy/
     Lists every trailer on site with its yard slot or dock door.
 
-    REMAINING (legacy side):
-      - move.cfm     - request a move from a slot to a door
-      - checkout.cfm - check a trailer out and free its location
-
     Use RELATIVE links (href="checkin.cfm"), because the gateway serves
     this app under /legacy/.
 --->

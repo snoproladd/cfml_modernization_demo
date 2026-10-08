@@ -10,9 +10,42 @@
 <cfif structKeyExists(form, "trailer_id") AND structKeyExists(form, "to_location_id")>
     <!--- Form submitted: record the move and relocate the trailer together --->
     <cftransaction>
-        <!--- TODO: INSERT INTO moves (trailer_id, from_location_id, to_location_id, completed_at) --->
+        <cfquery name="qTrailer">
+            SELECT location_id
+            FROM trailers
+            WHERE id = <cfqueryparam value="#form.trailer_id#" cfsqltype="cf_sql_integer">
+        </cfquery>
 
-        <!--- TODO: UPDATE trailers SET location_id = ..., status = ... WHERE id = ... --->
+        <cfquery name="qDest">
+            SELECT location_type
+            FROM locations
+            WHERE id = <cfqueryparam value="#form.to_location_id#" cfsqltype="cf_sql_integer">
+        </cfquery>
+
+        <cfif qDest.location_type EQ "door">
+            <cfset newStatus = "at_door">
+        <cfelse>
+            <cfset newStatus = "in_yard">
+        </cfif>
+
+        <cfquery>
+            INSERT INTO moves (trailer_id, from_location_id, to_location_id, completed_at)
+            VALUES (
+                <cfqueryparam value="#form.trailer_id#" cfsqltype="cf_sql_integer">,
+                <cfqueryparam value="#qTrailer.location_id#" cfsqltype="cf_sql_integer">,
+                <cfqueryparam value="#form.to_location_id#" cfsqltype="cf_sql_integer">,
+                now()
+            )
+        </cfquery>
+
+        <cfquery>
+            UPDATE trailers
+            SET
+                location_id = <cfqueryparam value="#form.to_location_id#" cfsqltype="cf_sql_integer">,
+                status = <cfqueryparam value="#newStatus#" cfsqltype="cf_sql_varchar" maxlength="12">
+            WHERE id = <cfqueryparam value="#form.trailer_id#" cfsqltype="cf_sql_integer">
+              AND status <> 'checked_out'
+        </cfquery>
     </cftransaction>
     <cflocation url="index.cfm" addtoken="false">
 </cfif>
@@ -30,8 +63,17 @@
     WHERE t.status IN ('in_yard', 'at_door')
     ORDER BY l.code
 </cfquery>
-
-<!--- TODO: qOpenLocations - every empty slot AND door (id, code, location_type) --->
+<cfquery name= "qOpenLocations">
+    SELECT id, code, location_type
+    FROM locations
+    WHERE id NOT IN (
+    SELECT location_id
+    FROM trailers
+    WHERE status <> 'checked_out'
+    AND location_id IS NOT NULL
+    )
+    ORDER BY location_type, code
+</cfquery>
 
 <cfoutput>
 <!doctype html>
@@ -77,8 +119,14 @@
                     <th>Location</th>
                     <th>Type</th>
                 </tr>
-                <!--- TODO: loop qOpenLocations - radio name="to_location_id", value = location id --->
-            </table>
+                <cfloop query="qOpenLocations">
+                    <tr>
+                        <td><input type="radio" name="to_location_id" value="#id#" id="loc_#id#" required></td>
+                        <td><label for="loc_#id#">#code#</label></td>
+                        <td>#location_type#</td>
+                    </tr>
+                </cfloop>
+                </table>
         </fieldset>
 
         <button type="submit">Move Trailer</button>

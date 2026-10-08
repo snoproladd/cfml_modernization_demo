@@ -40,8 +40,8 @@ modern-node/           Node/Express API + vanilla JS front end
 |---|---|---|
 | Yard list | [x] | [x] |
 | Gate check-in | [x] | [x] |
-| Move request (slot to door) | [ ] | [ ] |
-| Check-out | [X] | [ ] |
+| Move request (slot to door) | [x] | [ ] |
+| Check-out | [x] | [x] |
 
 ## Migration approach
 

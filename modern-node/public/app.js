@@ -25,26 +25,23 @@ async function open_slots() {
       const slot = data[s];
       const tr = document.createElement("tr");
 
-      // Cell 1: the radio button
       const rb_cell = document.createElement("td");
       const rb = document.createElement("input");
       rb.type = "radio";
       rb.name = "location_id";
       rb.required = true;
-      rb.value = slot.id; // database id -> what the server receives
-      rb.id = `slot_${slot.id}`; // element id -> what the label points at
+      rb.value = slot.id;
+      rb.id = `slot_${slot.id}`;
       rb_cell.appendChild(rb);
       tr.appendChild(rb_cell);
 
-      // Cell 2: the clickable code
       const code_cell = document.createElement("td");
       const lab = document.createElement("label");
-      lab.htmlFor = rb.id; // must match the radio's id exactly
+      lab.htmlFor = rb.id;
       lab.textContent = slot.code;
       code_cell.appendChild(lab);
       tr.appendChild(code_cell);
 
-      // Cell 3: the type
       const type_cell = document.createElement("td");
       type_cell.textContent = slot.location_type;
       tr.appendChild(type_cell);
@@ -80,15 +77,13 @@ async function yardList() {
       el_h.appendChild(th);
     }
 
-    // One row per trailer
     for (let k = 0; k < data.length; k++) {
-      const trailer = data[k]; // the current trailer object
+      const trailer = data[k];
       const tr = document.createElement("tr");
 
-      // One cell per column, in the same order as the headers
       for (let label in dataFields) {
-        const field = dataFields[label]; // e.g. "Carrier" -> "carrier"
-        let value = trailer[field]; // brackets: look up the property named by `field`
+        const field = dataFields[label];
+        let value = trailer[field];
 
         if (field === "checked_in_at") {
           value = new Date(value).toLocaleString();
@@ -96,10 +91,10 @@ async function yardList() {
 
         const td = document.createElement("td");
         td.textContent = value;
-        tr.appendChild(td); // cell goes into the row
+        tr.appendChild(td);
       }
 
-      el_b.appendChild(tr); // finished row goes into the table
+      el_b.appendChild(tr);
     }
   } catch (err) {
     el_b.textContent = "No trailers found.";
@@ -158,31 +153,28 @@ async function checkout_trailer() {
     const data = await res.json();
 
     for (let k = 0; k < data.length; k++) {
-      const trailer = data[k]; // the current trailer object
+      const trailer = data[k];
       const tr = document.createElement("tr");
-      // Cell 1: the radio button
       const rb_cell = document.createElement("td");
       const rb = document.createElement("input");
       rb.type = "radio";
       rb.name = "id";
       rb.required = true;
-      rb.value = trailer.id; // database id -> what the server receives
-      rb.id = `trailer_${trailer.id}`; // element id -> what the label points at
+      rb.value = trailer.id;
+      rb.id = `trailer_${trailer.id}`;
       rb_cell.appendChild(rb);
       tr.appendChild(rb_cell);
 
-      // Cell 2: the clickable code
       const code_cell = document.createElement("td");
       const lab = document.createElement("label");
-      lab.htmlFor = rb.id; // must match the radio's id exactly
+      lab.htmlFor = rb.id;
       lab.textContent = trailer.trailer_number;
       code_cell.appendChild(lab);
       tr.appendChild(code_cell);
 
-      // One cell per column, in the same order as the headers
       for (let label in dataFields) {
-        const field = dataFields[label]; // e.g. "Carrier" -> "carrier"
-        let value = trailer[field]; // brackets: look up the property named by `field`
+        const field = dataFields[label];
+        let value = trailer[field];
         if (field === "trailer_number") {
           continue;
         }
@@ -192,11 +184,11 @@ async function checkout_trailer() {
 
         const td = document.createElement("td");
         td.textContent = value;
-        tr.appendChild(td); // cell goes into the row
+        tr.appendChild(td);
       }
 
-      el.appendChild(tr); // finished row goes into the table
-    } // end of the for loop
+      el.appendChild(tr);
+    }
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -218,12 +210,12 @@ async function checkout_trailer() {
         }
       } catch (err) {
         console.error("Network error:", err);
-      } // end of the inner try/catch
-    }); // end of the submit listener
+      }
+    });
   } catch (err) {
     console.error(err);
-  } // end of the outer try/catch
-} // end of checkout_trailer
+  }
+}
 
 checkHealth();
 yardList();
