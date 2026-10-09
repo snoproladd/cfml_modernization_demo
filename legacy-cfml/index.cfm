@@ -1,11 +1,3 @@
-<!---
-    Legacy app home page: localhost:3000/legacy/
-    Lists every trailer on site with its yard slot or dock door.
-
-    Use RELATIVE links (href="checkin.cfm"), because the gateway serves
-    this app under /legacy/.
---->
-
 <cfquery name="counts">
     SELECT
         (SELECT COUNT(*) FROM trailers WHERE status <> 'checked_out') AS on_site,

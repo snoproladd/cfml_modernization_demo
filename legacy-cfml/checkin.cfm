@@ -1,5 +1,4 @@
 <cfif structKeyExists(form, "location_id")>
-    <!--- Form submitted: save the trailer, then return to the yard list --->
     <cfquery name="check_in">
         INSERT INTO trailers (trailer_number, carrier, seal_number, load_status, location_id, checked_in_at)
         VALUES (

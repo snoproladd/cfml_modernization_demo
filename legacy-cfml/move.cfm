@@ -8,7 +8,6 @@
 --->
 
 <cfif structKeyExists(form, "trailer_id") AND structKeyExists(form, "to_location_id")>
-    <!--- Form submitted: record the move and relocate the trailer together --->
     <cftransaction>
         <cfquery name="qTrailer">
             SELECT location_id

@@ -12,7 +12,7 @@
   <p><a href="/legacy/">Go to the legacy ColdFusion app</a></p>
 
   <form id="move">
-    <fieldset>
+    <fieldset id="move_set">
       <legend>Trailer to move</legend>
       <table>
         <thead>
@@ -24,12 +24,11 @@
             <th>Status</th>
           </tr>
         </thead>
-        <!-- filled by app.js: radios named trailer_id -->
         <tbody id="move_trailer_body"></tbody>
       </table>
     </fieldset>
 
-    <fieldset>
+    <fieldset id="destination_set">
       <legend>Destination</legend>
       <table>
         <thead>
@@ -39,7 +38,6 @@
             <th>Type</th>
           </tr>
         </thead>
-        <!-- filled by app.js: radios named to_location_id -->
         <tbody id="move_destination_body"></tbody>
       </table>
     </fieldset>

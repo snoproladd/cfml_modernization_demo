@@ -1,5 +1,3 @@
-// Front-end JavaScript for the modern app. Vanilla JS, no framework,
-// matching the stack in the job posting.
 
 async function checkHealth() {
   const el = document.getElementById("status");
@@ -53,7 +51,6 @@ async function open_slots() {
   }
 }
 
-// Yard list: fetch trailers from the API and build the table rows.
 async function yardList() {
   const el_h = document.getElementById("trailer_table_head");
   const el_b = document.getElementById("trailer_table_body");
@@ -217,8 +214,144 @@ async function checkout_trailer() {
   }
 }
 
+async function move_trailer() {
+  const trailerDataFields = {
+    Trailer: "trailer_number",
+    Carrier: "carrier",
+    Location: "code",
+    Status: "status",
+  };
+
+  const destDataFields = {
+    Location: "id",
+    "Location Type": "location_type",
+  };
+  const el_move_set = document.getElementById("move_set");
+  const el_dest_set = document.getElementById("destination_set");
+  const el_trailer_bod = document.getElementById("move_trailer_body");
+  const el_move_bod = document.getElementById("move_destination_body");
+  try {
+    if (!el_move_set || !el_dest_set) {
+      return;
+    }
+
+    const trail_res = await fetch("/api/trailers");
+    const trail_data = await trail_res.json();
+
+    // Populate Trailer Table
+
+    for (let k = 0; k < trail_data.length; k++) {
+      const trailer = trail_data[k];
+      const tr = document.createElement("tr");
+      const rb_cell = document.createElement("td");
+      const rb = document.createElement("input");
+      rb.type = "radio";
+      rb.name = "trailer_id";
+      rb.required = true;
+      rb.value = trailer.id;
+      rb.id = `trailer_${trailer.id}`;
+      rb_cell.appendChild(rb);
+      tr.appendChild(rb_cell);
+
+      const code_cell = document.createElement("td");
+      const lab = document.createElement("label");
+      lab.htmlFor = rb.id;
+      lab.textContent = trailer.trailer_number;
+      code_cell.appendChild(lab);
+      tr.appendChild(code_cell);
+
+      for (let label in trailerDataFields) {
+        const field = trailerDataFields[label];
+        let value = trailer[field];
+        if (field === "trailer_number") {
+          continue;
+        }
+        if (field === "checked_in_at") {
+          value = new Date(value).toLocaleString();
+        }
+
+        const td = document.createElement("td");
+        td.textContent = value;
+        tr.appendChild(td);
+      }
+
+      el_trailer_bod.appendChild(tr);
+    }
+    const dest_res = await fetch("/api/open_spots_all");
+    const dest_data = await dest_res.json();
+    // Populate Location Table
+
+    for (let k = 0; k < dest_data.length; k++) {
+      const dest = dest_data[k];
+      const tr = document.createElement("tr");
+      const rb_cell = document.createElement("td");
+      const rb = document.createElement("input");
+      rb.type = "radio";
+      rb.name = "to_location_id";
+      rb.required = true;
+      rb.value = dest.id;
+      rb.id = `dest_${dest.id}`;
+      rb_cell.appendChild(rb);
+      tr.appendChild(rb_cell);
+
+      const code_cell = document.createElement("td");
+      const lab = document.createElement("label");
+      lab.htmlFor = rb.id;
+      lab.textContent = dest.code;
+      code_cell.appendChild(lab);
+      tr.appendChild(code_cell);
+
+      for (let label in destDataFields) {
+        const field = destDataFields[label];
+        let value = dest[field];
+        if (field === "id") {
+          continue;
+        }
+        if (field === "checked_in_at") {
+          value = new Date(value).toLocaleString();
+        }
+
+        const td = document.createElement("td");
+        td.textContent = value;
+        tr.appendChild(td);
+      }
+
+      el_move_bod.appendChild(tr);
+    }
+    const form = document.getElementById("move");
+    if (!form) {
+      return;
+    }
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(form);
+      const body = Object.fromEntries(formData);
+
+      try {
+          const response_move = await fetch("/api/move_trailer", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+           });
+           if (response_move.ok) {
+             window.location.href = "/";
+           } else {
+             const result = await response_move.json();
+             console.error("Server error:", response_move.status, result.error);
+           }
+      
+      } catch (err) {
+        console.error("Network error:", err);
+      }
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 checkHealth();
 yardList();
 open_slots();
 route_trailer();
 checkout_trailer();
+move_trailer();
